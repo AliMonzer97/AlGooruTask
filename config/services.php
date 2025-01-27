@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'news_api' => [
+        'base_url' => env('NEWS_API_BASE_URL', 'https://newsapi.org/v2'),
+        'api_key' => env('NEWS_API_KEY', '7782c734fb784ca3afd8cbf1cadfa748'),
+    ],
+
+    'guardian_api' => [
+        'base_url' => env('GUARDIAN_API_BASE_URL', 'https://content.guardianapis.com'),
+        'api_key' => env('GUARDIAN_API_KEY', '639712d4-2cd1-4812-8484-84c3ec0e1c57'),
+    ],
 ];
