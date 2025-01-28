@@ -190,4 +190,11 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+
+    /*
+     * Pagination default page length
+     *
+     * */
+    'per_page' => 10,
+
 ];

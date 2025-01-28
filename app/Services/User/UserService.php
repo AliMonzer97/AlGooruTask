@@ -42,4 +42,6 @@ class UserService extends AuthService
     {
         $request->user()->tokens()->delete();
     }
+
+
 }

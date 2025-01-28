@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function () {
     Route::post('login', [UserController::class, 'login']);
 });
+
+Route::prefix('news')->group(function () {
+    Route::get('/', [NewsController::class, 'index']);
+});
+
+
 

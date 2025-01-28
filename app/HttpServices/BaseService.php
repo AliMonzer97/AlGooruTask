@@ -28,7 +28,7 @@ abstract class BaseService implements ServiceInterface
      * @return mixed
      * @throws RequestException
      */
-    protected function request(string $method, string $path, array $options = []): mixed
+    protected function request(string $method, string $path): mixed
     {
 
         $url = rtrim($this->baseUrl, '/')  . trim($this->getServicePrefix(), '/') . '/' . ltrim($path, '/');

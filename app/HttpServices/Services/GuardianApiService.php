@@ -55,8 +55,34 @@ class GuardianApiService extends BaseService
     {
         $query = array_merge(['q' => $queryString], $additionalParams);
 
-        $path = 'search?'.'api-key='.config('services.guardian_api.api_key');
+//        $path = 'search?'.'api-key='.config('services.guardian_api.api_key');
+        $path = $this->buildPath();
 
         return $this->get($path, $query);
+    }
+
+    /**
+     * Build query parameters with default values.
+     *
+     * @param array $query
+     * @return array
+     */
+    /**
+     * Build the API path with dynamic query parameters.
+     *
+     * @return string
+     */
+    private function buildPath(): string
+    {
+        $query = [];
+        $defaultParams = [
+
+            'from-date' => now()->subDay()->toIso8601String(),
+            'to-date' => now()->toIso8601String(),
+        ];
+
+        $params = array_merge($defaultParams, $query);
+
+        return 'search?'.'api-key='.config('services.guardian_api.api_key').'&' . http_build_query($params);
     }
 }
