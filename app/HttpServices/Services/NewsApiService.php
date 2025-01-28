@@ -53,10 +53,36 @@ class NewsApiService extends BaseService
     public function getNews(array $query = []): mixed
     {
         $query = array_merge($query);
-        $path = 'everything?'.'q=bitcoin';
+        $path = $this->buildPath();
         return $this->get($path, $query);
     }
-    public function getHeaders(array $headers = []): array
+
+
+    /**
+     * Build query parameters with default values.
+     *
+     * @param array $query
+     * @return array
+     */
+    /**
+     * Build the API path with dynamic query parameters.
+     *
+     * @return string
+     */
+    private function buildPath(): string
+    {
+        $query = [];
+        $defaultParams = [
+            'q' => 'a',
+            'from' => now()->subDay()->toIso8601String(),
+            'to' => now()->toIso8601String(),
+        ];
+
+        $params = array_merge($defaultParams, $query);
+
+        return 'everything?' . http_build_query($params);
+    }
+        public function getHeaders(array $headers = []): array
     {
         return array_merge(parent::getHeaders($headers),['x-api-key'=>config('services.news_api.api_key')]);
     }

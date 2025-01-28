@@ -12,7 +12,7 @@
 
 namespace App\UseCases\Model;
 
-use App\Infrastructure\Repositories\Base\BaseRepository;
+use App\Repositories\Base\BaseRepository;
 
 
 /**
