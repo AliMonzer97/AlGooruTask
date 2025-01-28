@@ -52,20 +52,9 @@ abstract class DestroyManyModelsUseCase extends DeleteModelUseCase
      */
     function handle(array $data = []): ?bool
     {
-
-        return $this->repository->destroyMany($this->ids, $this->columns,$this->conditions);
+        return $this->repository->destroyMany($this->ids, $this->columns);
     }
 
-
-    /**
-     * Sets the array of IDs for the model entities to be destroyed.
-     *
-     * @param array $ids An array of model entity IDs.
-     */
-    public  function setIds(array $ids): void
-    {
-        $this->ids = $ids;
-    }
 
     public function prepareData(array $data = []): array
     {
