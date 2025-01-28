@@ -17,7 +17,6 @@ class User extends Authenticatable
     protected $guarded = ['id'];
     protected string $guard_name = 'api';
 
-
     /**
      * The attributes that should be cast.
      *

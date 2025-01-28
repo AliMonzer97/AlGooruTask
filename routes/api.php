@@ -15,18 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->group(function () {
+Route::group(['prefix' => 'user'], function () {
+    // Public routes (no authentication required)
+    Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
+
+    // Protected routes (require authentication)
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('add-to-favorites', [UserController::class, 'addToFavorites']);
+        Route::delete('remove-from-favorites', [UserController::class, 'removeFromFavorites']);
+    });
 });
 
 Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index']);
 });
 
-Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function () {
-    Route::post('add-to-favorites', [UserController::class, 'addToFavorites']);
-    Route::delete('remove-from-favorites', [UserController::class, 'removeFromFavorites']);
-});
 
 
 
