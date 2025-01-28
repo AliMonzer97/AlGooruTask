@@ -5,12 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Helpers\ApiResponse;
 use App\Http\Requests\User\AddToFavoritesRequest;
-use App\Http\Requests\User\LoginAdminRequest;
+use App\Http\Requests\User\LoginRequest;
+use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\RemoveFromFavoritesRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\User\UserService;
-use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -23,10 +23,17 @@ class UserController extends Controller
     }
 
 
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $data = $this->service->register($request->validated());
+        return ApiResponse::success($data);
+    }
+
     /**
-     * @throws ValidationException
+     * @param LoginRequest $request
+     * @return JsonResponse
      */
-    public function login(LoginAdminRequest $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         $data = $this->service->login($request->validated());
         return ApiResponse::success($data);
