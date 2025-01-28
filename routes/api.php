@@ -23,5 +23,12 @@ Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index']);
 });
 
+Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function () {
+    Route::post('add-to-favorites', [UserController::class, 'addToFavorites']);
+    Route::delete('remove-from-favorites', [UserController::class, 'removeFromFavorites']);
+});
+
+
+
 
 
