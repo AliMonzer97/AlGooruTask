@@ -77,7 +77,7 @@ class GuardianApiService extends BaseService
         $query = [];
         $defaultParams = [
 
-            'from-date' => now()->subDay()->toIso8601String(),
+            'from-date' => now()->subHour()->toIso8601String(),
             'to-date' => now()->toIso8601String(),
         ];
 

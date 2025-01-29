@@ -74,7 +74,7 @@ class NewsApiService extends BaseService
         $query = [];
         $defaultParams = [
             'q' => 'a',
-            'from' => now()->subDay()->toIso8601String(),
+            'from' => now()->subHour()->toIso8601String(),
             'to' => now()->toIso8601String(),
         ];
 
