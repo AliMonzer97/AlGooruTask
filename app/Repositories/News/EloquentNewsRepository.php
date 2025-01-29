@@ -2,6 +2,7 @@
 
 namespace App\Repositories\News;
 
+use App\Filters\Types\NewsFilterFactory;
 use App\Repositories\Base\EloquentBaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class EloquentNewsRepository extends EloquentBaseRepository implements NewsRepository
@@ -10,22 +11,32 @@ class EloquentNewsRepository extends EloquentBaseRepository implements NewsRepos
     {
         $perPage = $data['per_page'] ?? config('app.per_page');
 
-        // Retrieve user favorites and group them by type
-        $favorites = auth()->user()->favorites->groupBy('type_name');
+        $favorites = auth()->user()?->favorites->groupBy('type_name');
 
-        // Extract authors and categories
-        $authors = $favorites->get('Author', collect())->pluck('value')->unique()->toArray();
-        $categories = $favorites->get('Category', collect())->pluck('value')->unique()->toArray();
+        $authors = $favorites?->get('Author', collect())->pluck('value')->unique()->toArray() ?? [];
+        $categories = $favorites?->get('Category', collect())->pluck('value')->unique()->toArray() ?? [];
 
-        // Build and execute the query
-        return $this->model->newQuery()
-            ->when(!empty($authors), function ($query) use ($authors) {
-                $query->whereIn('author', $authors);
-            })
-            ->when(!empty($categories), function ($query) use ($categories) {
-                $query->orWhereIn('section', $categories);
-            })
-            ->paginate($perPage);
+        $query = $this->model->newQuery();
+
+        if (!empty($authors) || !empty($categories)) {
+            $query->where(function ($q) use ($authors, $categories) {
+                if (!empty($authors)) {
+                    $q->whereIn('author', $authors);
+                }
+                if (!empty($categories)) {
+                    $q->orWhereIn('section', $categories);
+                }
+            });
+        }
+
+        $query = $this->applyFilters($query, $data);
+
+        return $query->paginate($perPage);
+    }
+
+    public function applyFilters($query, $data)
+    {
+        return isset($data['filters']) ? NewsFilterFactory::applyFilters($query, $data['filters']) : $query;
     }
 
 }
