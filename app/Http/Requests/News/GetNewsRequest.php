@@ -3,6 +3,7 @@
 namespace App\Http\Requests\News;
 
 use App\Enums\GetNewsTypes;
+use App\Filters\Types\NewsFilterFactory;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,9 +25,9 @@ class GetNewsRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'type'=>['required','string',Rule::in(GetNewsTypes::cases())],
-            'per_page'=>['nullable','integer','min:1','max:100'],
-        ];
+        return array_merge([
+            'type' => ['required', 'string', Rule::in(GetNewsTypes::cases())],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+        ], NewsFilterFactory::getValidationRules());
     }
 }
