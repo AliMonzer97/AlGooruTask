@@ -26,6 +26,7 @@ class GetNewsRequest extends FormRequest
     {
         return [
             'type'=>['required','string',Rule::in(GetNewsTypes::cases())],
+            'per_page'=>['nullable','integer','min:1','max:100'],
         ];
     }
 }
