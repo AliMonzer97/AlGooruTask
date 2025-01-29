@@ -8,4 +8,5 @@ enum GetNewsTypes:string
 {
     use EnumHelper;
     case Guest = "guest";
+    case PersonalizedNews = "personalized";
 }
