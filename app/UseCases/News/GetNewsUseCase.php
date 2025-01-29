@@ -48,7 +48,8 @@ class GetNewsUseCase extends NewsUseCase
     public function handle(array $data = []):mixed
     {
         $result = $this->newsRepository
-            ->paginate(
+            ->getGuestNews(
+                $data,
                 $data['per_page'] ?? config('app.per_page'),
                 $this->attributes,
                 $this->with,
@@ -81,4 +82,6 @@ class GetNewsUseCase extends NewsUseCase
         // Set default attributes as an empty array (can be modified based on input)
         $this->attributes = [];
     }
+
+
 }
