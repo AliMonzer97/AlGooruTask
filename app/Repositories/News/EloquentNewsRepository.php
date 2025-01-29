@@ -39,4 +39,20 @@ class EloquentNewsRepository extends EloquentBaseRepository implements NewsRepos
         return isset($data['filters']) ? NewsFilterFactory::applyFilters($query, $data['filters']) : $query;
     }
 
+    public function getGuestNews(array $data = [],int $perPage = 15, ?array $conditions = null, ?array $with = null, array $columns = ['*'], $order = null): LengthAwarePaginator
+    {
+        $query = $this->model->newQuery();
+
+        $this->processQuery($query, $with);
+
+        if (!is_null($conditions)) {
+            $query->where($conditions);
+        }
+
+        $query = $this->applyFilters($query, $data);
+
+        return $query->paginate($perPage, $columns);
+    }
+
+
 }
