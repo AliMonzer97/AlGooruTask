@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('summary')->nullable();
             $table->longText('content')->nullable();
             $table->string('author', 255)->nullable();
-            $table->text('url')->unique();
-            $table->text('image_url')->nullable();
+            $table->string('url', 191)->unique();
+            $table->string('image_url',191)->nullable();
             $table->dateTime('published_at')->nullable();
             $table->string('external_id', 255)->index();
             $table->json('metadata')->nullable();
